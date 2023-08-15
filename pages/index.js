@@ -1,6 +1,21 @@
 import Image from 'next/image';
+import { useState } from 'react';
+
+const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const UPPERCASE = ALPHABET.toUpperCase().split('');
+const LOWERCASE = ALPHABET.split('');
+const SYMBOLS = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'];
+
+const reallyLazyWay = 'qwertyuiopasdfghjklzxcvbnm'.split('').sort();
 
 export default function Home() {
+  const [password, setPassword] = useState('P4$5W0rD!');
+  const [length, setLength] = useState(10);
+
+  function generateNewPassword() {}
+
   return (
     <div className="flex justify-center items-center h-screen w-100 bg-gray-950">
       <div className="h-5/6 w-2/6 ">
@@ -17,7 +32,7 @@ export default function Home() {
           </div>
           <div className="pt-4 pb-4">
             <input
-              class="w-full accent-green-800"
+              className="w-full accent-green-800"
               type="range"
               min="0"
               max="1000"
@@ -61,8 +76,8 @@ export default function Home() {
               <div className="h-10 w-2 border-1"></div>
             </div>
           </div>
-          <div className="bg-green-400 h-20 p-6 mt-5 text-center font-semibold ">
-            <button className="bg-green-400">GENERATE</button>
+          <div className="bg-green-400 h-20  mt-5 text-center font-semibold ">
+            <button className=" h-full w-full">GENERATE</button>
           </div>
         </div>
       </div>
