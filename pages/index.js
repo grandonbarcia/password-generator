@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -13,8 +13,24 @@ const reallyLazyWay = 'qwertyuiopasdfghjklzxcvbnm'.split('').sort();
 export default function Home() {
   const [password, setPassword] = useState('P4$5W0rD!');
   const [length, setLength] = useState(10);
+  const [rules, setRules] = useState({
+    upperLetters: true,
+    lowerLetters: true,
+    numbers: true,
+    symbols: false,
+  });
 
   function generateNewPassword() {}
+
+  function handleChange(e) {
+    setLength(e.target.value);
+  }
+
+  function handleCheck(value) {
+    setRules((prevData) => {
+      return { ...prevData, [value]: !prevData[value] };
+    });
+  }
 
   return (
     <div className="flex justify-center items-center h-screen w-100 bg-gray-950">
@@ -28,20 +44,23 @@ export default function Home() {
         <div className="h-3/5 bg-gray-700 p-8">
           <div className="flex justify-between text-white text-xl">
             <div>Character Length</div>
-            <div className="text-green-500 text-4xl">0</div>
+            <div className="text-green-500 text-4xl">{length}</div>
           </div>
           <div className="pt-4 pb-4">
             <input
               className="w-full accent-green-800"
               type="range"
               min="0"
-              max="1000"
+              max="20"
+              onChange={handleChange}
             />
           </div>
           <div className="flex">
             <input
               type="checkbox"
-              class="bg-red-100 border-red-300 text-red-500 focus:ring-red-200 "
+              className="bg-red-100 border-red-300 text-red-500 focus:ring-red-200 "
+              checked={rules['upperLetters']}
+              onChange={() => handleCheck('upperLetters')}
             />
             <div className="text-white text-xl pl-6">
               Include Uppercase Letters
@@ -50,7 +69,9 @@ export default function Home() {
           <div className="flex">
             <input
               type="checkbox"
-              class="bg-red-100 border-red-300 text-red-500 focus:ring-red-200"
+              className="bg-red-100 border-red-300 text-red-500 focus:ring-red-200"
+              checked={rules['lowerLetters']}
+              onChange={() => handleCheck('lowerLetters')}
             />
             <div className="text-white text-xl pl-6">
               Include Lowercase Letters
@@ -59,14 +80,18 @@ export default function Home() {
           <div className="flex">
             <input
               type="checkbox"
-              class="bg-red-100 border-red-300 text-red-500 focus:ring-red-200"
+              className="bg-red-100 border-red-300 text-red-500 focus:ring-red-200"
+              checked={rules['numbers']}
+              onChange={() => handleCheck('numbers')}
             />
             <div className="text-white text-xl pl-6">Include Numbers</div>
           </div>
           <div className="flex mb-5">
             <input
               type="checkbox"
-              class="bg-red-100 border-red-300 text-red-500 focus:ring-red-200"
+              className="bg-red-100 border-red-300 text-red-500 focus:ring-red-200"
+              checked={rules['symbols']}
+              onChange={() => handleCheck('symbols')}
             />
             <div className="text-white text-xl pl-6">Include Symbols</div>
           </div>
