@@ -2,13 +2,15 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
-const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const UPPERCASE = ALPHABET.toUpperCase().split('');
-const LOWERCASE = ALPHABET.split('');
-const SYMBOLS = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'];
 
 const reallyLazyWay = 'qwertyuiopasdfghjklzxcvbnm'.split('').sort();
+
+const DATABASE = {
+  upperLetters: ALPHABET.toUpperCase().split(''),
+  lowerLetters: ALPHABET.split(''),
+  numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  symbols: ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'],
+};
 
 export default function Home() {
   const [password, setPassword] = useState('P4$5W0rD!');
@@ -20,7 +22,14 @@ export default function Home() {
     symbols: false,
   });
 
-  function generateNewPassword() {}
+  function generateNewPassword() {
+    const rulesToApply = Object.keys(rules).filter((k) => rules[k]);
+
+    let min = 0;
+    let max = 10;
+
+    console.log(Math.floor(Math.random() * (max - min + 1)) + min);
+  }
 
   function handleChange(e) {
     setLength(e.target.value);
@@ -50,8 +59,8 @@ export default function Home() {
             <input
               className="w-full accent-green-800"
               type="range"
-              min="0"
-              max="20"
+              min="5"
+              max="15"
               onChange={handleChange}
             />
           </div>
@@ -102,7 +111,9 @@ export default function Home() {
             </div>
           </div>
           <div className="bg-green-400 h-20  mt-5 text-center font-semibold ">
-            <button className=" h-full w-full">GENERATE</button>
+            <button onClick={generateNewPassword} className=" h-full w-full">
+              GENERATE
+            </button>
           </div>
         </div>
       </div>
