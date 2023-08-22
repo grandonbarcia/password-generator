@@ -22,13 +22,29 @@ export default function Home() {
     symbols: false,
   });
 
+  function getRandomNum(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function getRandomChar(rule) {
+    const arrOfChars = [...DATABASE[rule]];
+    const randomNum = getRandomNum(0, arrOfChars.length - 1);
+
+    return arrOfChars[randomNum];
+  }
+
   function generateNewPassword() {
     const rulesToApply = Object.keys(rules).filter((k) => rules[k]);
+    const passwordArr = [];
+    for (let i = 0; i < length; i++) {
+      const randomNum = getRandomNum(0, rulesToApply.length - 1);
+      const rule = rulesToApply[randomNum];
 
-    let min = 0;
-    let max = 10;
+      const randomChar = getRandomChar(rule);
+      passwordArr.push(randomChar);
+    }
 
-    console.log(Math.floor(Math.random() * (max - min + 1)) + min);
+    setPassword(passwordArr.join(''));
   }
 
   function handleChange(e) {
@@ -48,7 +64,7 @@ export default function Home() {
           Password Generator
         </div>
         <div className="flex pl-8 pr-8 items-center h-1/6 bg-gray-700 mb-5 text-4xl text-zinc-400">
-          <div>P4$5W0rD!</div>
+          <div>{password}</div>
         </div>
         <div className="h-3/5 bg-gray-700 p-8">
           <div className="flex justify-between text-white text-xl">
