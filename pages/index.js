@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import zxcvbn from 'zxcvbn';
 
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
@@ -12,6 +13,11 @@ const DATABASE = {
   symbols: ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'],
 };
 
+const RED = 'bg-red-600';
+const ORA = 'bg-orange-600';
+const YEL = 'bg-yellow-600';
+const GRE = 'bg-green-600';
+
 export default function Home() {
   const [password, setPassword] = useState('P4$5W0rD!');
   const [length, setLength] = useState(10);
@@ -21,6 +27,8 @@ export default function Home() {
     numbers: true,
     symbols: false,
   });
+
+  const [evaluation, setEvaluation] = useState({});
 
   function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -56,6 +64,42 @@ export default function Home() {
       return { ...prevData, [value]: !prevData[value] };
     });
   }
+
+  function StrengthBar() {
+    const strengthArr = Array(4);
+    let color;
+
+    switch (score) {
+      case 1:
+        color = RED;
+        break;
+      case 2:
+        color = ORA;
+        break;
+      case 3:
+        color = YEL;
+        break;
+      case 4:
+        color = GRE;
+        break;
+      default:
+      // code block
+    }
+    console.log(color);
+
+    for (let i = 0; i < 4; i++) {
+      strengthArr.push(<div className="h-10 w-4 bg-white"></div>);
+    }
+    return strengthArr;
+  }
+
+  useEffect(() => {
+    setEvaluation(zxcvbn(password));
+  }, [password]);
+
+  useEffect(() => {
+    console.log(evaluation);
+  }, [evaluation]);
 
   return (
     <div className="flex justify-center items-center h-screen w-100 bg-gray-950">
@@ -120,10 +164,10 @@ export default function Home() {
             />
             <div className="text-white text-xl pl-6">Include Symbols</div>
           </div>
-          <div className="flex items-center h-20 bg-gray-800 p-6 text-zinc-400 font-semibold ">
+          <div className="flex items-center justify-between h-20 bg-gray-800 p-6 text-zinc-400 font-semibold ">
             <div>STRENGTH</div>
-            <div>
-              <div className="h-10 w-2 border-1"></div>
+            <div className="w-1/6 flex justify-between">
+              <StrengthBar />
             </div>
           </div>
           <div className="bg-green-400 h-20  mt-5 text-center font-semibold ">
