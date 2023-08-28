@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center h-screen w-100 bg-gray-950">
-      <div className="h-5/6 w-2/6 ">
+      <div className="h-5/6 sm:w-4/6 md:w-4/6 lg:w-2/6 ">
         <div className="text-zinc-400 mb-8 text-center text-2xl font-bold ">
           Password Generator
         </div>
