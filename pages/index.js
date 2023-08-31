@@ -91,9 +91,9 @@ export default function Home() {
 
     for (let i = 0; i < 4; i++) {
       if (evaluation.score > i) {
-        strengthArr.push(<div className={`h-10 w-4 ${color}`}></div>);
+        strengthArr.push(<div key={i} className={`h-10 w-4 ${color}`}></div>);
       } else {
-        strengthArr.push(<div className={`h-10 w-4 ${WHITE}`}></div>);
+        strengthArr.push(<div key={i} className={`h-10 w-4 ${WHITE}`}></div>);
       }
     }
     return strengthArr;
