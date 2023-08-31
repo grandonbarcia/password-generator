@@ -14,9 +14,10 @@ const DATABASE = {
 };
 
 const RED = 'bg-red-600';
-const ORA = 'bg-orange-600';
-const YEL = 'bg-yellow-600';
-const GRE = 'bg-green-600';
+const ORANGE = 'bg-orange-600';
+const YELLOW = 'bg-yellow-400';
+const GREEN = 'bg-green-600';
+const WHITE = 'bg-white';
 
 export default function Home() {
   const [password, setPassword] = useState('P4$5W0rD!');
@@ -65,30 +66,35 @@ export default function Home() {
     });
   }
 
-  function StrengthBar() {
+  function StrengthMeter() {
     const strengthArr = Array(4);
     let color;
 
-    switch (score) {
+    switch (evaluation.score) {
       case 1:
         color = RED;
         break;
       case 2:
-        color = ORA;
+        color = ORANGE;
         break;
       case 3:
-        color = YEL;
+        color = YELLOW;
         break;
       case 4:
-        color = GRE;
+        color = GREEN;
         break;
       default:
+        color = WHITE;
+        break;
       // code block
     }
-    console.log(color);
 
     for (let i = 0; i < 4; i++) {
-      strengthArr.push(<div className="h-10 w-4 bg-white"></div>);
+      if (evaluation.score > i) {
+        strengthArr.push(<div className={`h-10 w-4 ${color}`}></div>);
+      } else {
+        strengthArr.push(<div className={`h-10 w-4 ${WHITE}`}></div>);
+      }
     }
     return strengthArr;
   }
@@ -96,10 +102,6 @@ export default function Home() {
   useEffect(() => {
     setEvaluation(zxcvbn(password));
   }, [password]);
-
-  useEffect(() => {
-    console.log(evaluation);
-  }, [evaluation]);
 
   return (
     <div className="flex justify-center items-center h-screen w-100 bg-gray-950">
@@ -167,7 +169,7 @@ export default function Home() {
           <div className="flex items-center justify-between h-20 bg-gray-800 p-6 text-zinc-400 font-semibold ">
             <div>STRENGTH</div>
             <div className="w-1/6 flex justify-between">
-              <StrengthBar />
+              <StrengthMeter />
             </div>
           </div>
           <div className="bg-green-400 h-20  mt-5 text-center font-semibold ">
